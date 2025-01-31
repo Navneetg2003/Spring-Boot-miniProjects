@@ -23,7 +23,7 @@ Welcome to my Spring Boot projects repository! 🚀 This repository contains all
 
 ## 📫 Contact
 If you have any questions or suggestions, feel free to reach out!
-- 📧 Email: navneet@1302@gmail.com
+- 📧 Email: navneetg1302@gmail.com
 - 🔗 LinkedIn: [Navneet Gupta](https://www.linkedin.com/in/navneetgupta/)
 
 ---
