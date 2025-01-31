@@ -1,4 +1,4 @@
-# *** Spring Boot Projects Repository***
+# ***Spring Boot Projects Repository***
 Welcome to my Spring Boot projects repository! 🚀 This repository contains all the projects I have built while learning Spring Boot, covering various aspects such as REST APIs, database integration, authentication, and microservices.
 
 ## 🚀 How to Run the Projects
