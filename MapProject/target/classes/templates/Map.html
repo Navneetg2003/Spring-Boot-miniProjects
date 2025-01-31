@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Map with Cities</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgvL-oMuZ7eW9AkL9ihXBf_8XSEXD-wpQ&callback=initMap" async defer></script>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;  /* Black background */
+            color: #ffffff;  /* White text */
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #03f7eb;  /* Fluorescent cyan */
+            margin-top: 20px;
+        }
+
+        /* Container for input fields and button */
+        .input-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 50%;
+            gap: 20px;
+        }
+
+        label {
+            font-size: 18px;
+            color: #ffffff;
+            width: 100px;
+        }
+
+        input {
+            padding: 8px;
+            width: 200px;
+            border-radius: 5px;
+            border: 1px solid #00b295;  /* Jungle green */
+            background-color: #333333;
+            color: #ffffff;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #03f7eb;  /* Fluorescent cyan */
+            color: #1a1a1a;  /* Black text */
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #00b295;  /* Jungle green on hover */
+        }
+
+        /* Google Map container */
+        #map {
+            height: 500px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+    </style>
+    <script type="text/javascript">
+        // Function to calculate the distance between two points in kilometers
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; // Earth radius in kilometers
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c; // Distance in kilometers
+        }
+
+        // Initialize the map
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 5,
+                center: { lat: 28.7041, lng: 77.1025 }  // Default center around Delhi
+            });
+
+            // Fetch the cities data from the backend
+            fetch('/cities')
+                .then(response => response.json())
+                .then(cities => {
+                    var markers = [];
+                    var groupedCities = [];
+
+                    // Group cities that are relatively close
+                    for (let i = 0; i < cities.length; i++) {
+                        let city1 = cities[i];
+                        let group = [city1];
+
+                        for (let j = i + 1; j < cities.length; j++) {
+                            let city2 = cities[j];
+                            let distance = calculateDistance(city1.latitude, city1.longitude, city2.latitude, city2.longitude);
+
+                            // If cities are within 100 km, group them together
+                            if (distance <= 500) {
+                                group.push(city2);
+                            }
+                        }
+
+                        // Add group if not already added
+                        if (!groupedCities.some(g => g.every(city => group.includes(city)))) {
+                            groupedCities.push(group);
+                        }
+                    }
+
+                    // Create a polygon for each group of nearby cities
+                    groupedCities.forEach(group => {
+                        var linePath = [];
+                        group.forEach(city => {
+                            var marker = new google.maps.Marker({
+                                position: { lat: city.latitude, lng: city.longitude },
+                                map: map,
+                                title: city.cityName
+                            });
+
+                            // Store city coordinates to draw the polygon
+                            linePath.push(new google.maps.LatLng(city.latitude, city.longitude));
+                        });
+
+                        // Close the polygon by adding the first city to the end of the path
+                        if (linePath.length > 0) {
+                            linePath.push(linePath[0]);
+                        }
+
+                        // Create a Polygon to form a closed shape
+                        var polygon = new google.maps.Polygon({
+                            paths: linePath,
+                            geodesic: true,
+                            strokeColor: '#FF0000',  // Red color for the outline
+                            strokeOpacity: 1.0,
+                            strokeWeight: 2,
+                            fillColor: '#FF0000',  // Red color for the fill
+                            fillOpacity: 0.35
+                        });
+
+                        polygon.setMap(map);  // Draw the polygon on the map
+                    });
+                })
+                .catch(error => console.log('Error fetching cities data: ', error));
+        }
+
+        // Function to handle adding a city to the database
+        function addCity() {
+            var cityName = document.getElementById('cityName').value;
+            var latitude = parseFloat(document.getElementById('latitude').value);
+            var longitude = parseFloat(document.getElementById('longitude').value);
+
+            if (!cityName || isNaN(latitude) || isNaN(longitude)) {
+                alert("Please fill in all fields correctly.");
+                return;
+            }
+
+            // Create a city object to send to the backend
+            var city = {
+                cityName: cityName,
+                latitude: latitude,
+                longitude: longitude
+            };
+
+            // Send the city data to the backend to save it in the database
+            fetch('/addcity', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(city)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert("City added successfully!");
+                    // Optionally, you could reload the map or update the markers
+                    window.location.reload();  // Reload the page to reflect the newly added city
+                })
+                .catch(error => console.log('Error adding city: ', error));
+        }
+    </script>
+</head>
+<body>
+<h1>Google Map with Cities</h1>
+
+<!-- Dialog boxes above the map -->
+<div class="input-container">
+    <div class="input-group">
+        <label for="cityName">City Name:</label>
+        <input type="text" id="cityName" placeholder="Enter city name" />
+    </div>
+    <div class="input-group">
+        <label for="latitude">Latitude:</label>
+        <input type="number" id="latitude" step="any" placeholder="Enter latitude" />
+    </div>
+    <div class="input-group">
+        <label for="longitude">Longitude:</label>
+        <input type="number" id="longitude" step="any" placeholder="Enter longitude" />
+    </div>
+    <button onclick="addCity()">Add City</button>
+</div>
+
+<!-- Google Map -->
+<div id="map"></div>
+
+</body>
+</html>
