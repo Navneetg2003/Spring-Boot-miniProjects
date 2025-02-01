@@ -1,0 +1,68 @@
+* {
+    padding: 10px;
+    margin: 10px;
+    background-color: rgb(66, 57, 67);
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-style: italic;
+    font-weight: 500;
+    color: aliceblue;
+}
+
+.container {
+    border: 2px solid white;
+    margin: 0 auto;
+    width: 60%;
+    min-height: fit-content;
+    min-width: fit-content;
+    border-radius: 5%;
+    padding: 20px;
+}
+
+.heading {
+    font-weight: bold;
+    text-decoration: underline darksalmon;
+    border: 2px solid antiquewhite;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid white;
+}
+
+th {
+    background-color: rgb(66, 57, 67);
+    color: aliceblue;
+}
+
+td {
+    background-color: #333;
+}
+
+.btn {
+    border-radius: 20px;
+    border: 2px solid aliceblue;
+    cursor: pointer;
+    background-color: rgb(66, 57, 67);
+    color: aliceblue;
+    font-size: 16px;
+    margin: 5px;
+}
+
+.btn:hover {
+    background-color: rgba(66, 57, 67, 0.56);
+    border-color: darksalmon;
+}
+
+a {
+    text-decoration: none; /* Remove underline from links */
+}

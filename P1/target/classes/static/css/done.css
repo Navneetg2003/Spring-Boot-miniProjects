@@ -1,0 +1,41 @@
+* {
+    padding: 10px;
+    margin: 10px;
+    background-color: rgb(66, 57, 67);
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-style: italic;
+    font-weight: 500;
+    color: aliceblue;
+}
+
+.container {
+    border: 2px solid white;
+    margin: 0 auto;
+    width: 40%;
+    min-height: fit-content;
+    min-width: fit-content;
+    border-radius: 5%;
+    padding: 20px;
+}
+
+.heading {
+    font-weight: bold;
+    text-decoration: underline darksalmon;
+    border: 2px solid antiquewhite;
+    border-radius: 20px;
+}
+
+.btn {
+    border-radius: 20px;
+    border: 2px solid aliceblue;
+    cursor: pointer;
+    background-color: rgb(66, 57, 67);
+    color: aliceblue;
+    font-size: 16px;
+}
+
+.btn:hover {
+    background-color: rgba(66, 57, 67, 0.56);
+    border-color: darksalmon;
+}

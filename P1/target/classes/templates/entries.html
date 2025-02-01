@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Form Entries</title>
+  <link rel="stylesheet" href="../static/css/entries.css" th:href="@{/css/entries.css}" >
+</head>
+<body class="container">
+<h2 class="heading">All Form Entries</h2>
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Gender</th>
+    <th>Age</th>
+    <th>EmailID</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="entry : ${entries}">
+    <td th:text="${entry.id}"></td>
+    <td th:text="${entry.name}"></td>
+    <td th:text="${entry.gender}"></td>
+    <td th:text="${entry.age}"></td>
+    <td th:text="${entry.mailId}"></td>
+    <td>
+      <a th:href="@{/myapp/update/{myid}(myid=${entry.id})}">
+        <button class="btn">Edit</button>
+      </a>
+      <a th:href="@{/myapp/deleteId/{myid}(myid=${entry.id})}">
+        <button class="btn">Delete</button>
+      </a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<a href="http://localhost:8080/myapp/form">
+  <button class="btn">Back</button>
+</a>
+</body>
+</html>
