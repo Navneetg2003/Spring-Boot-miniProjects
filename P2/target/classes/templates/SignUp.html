@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="/css/SignUp.css" th:href="@{/css/SignUp.css}">
+    <script>
+
+        function checkEmailExistence() {
+            const emailField = document.getElementById("Email");
+            const submitButton = document.getElementById("submitButton");
+            submitButton.disabled = true;
+
+            fetch('/p2/check-email?email=' + encodeURIComponent(emailField.value))
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        Swal.fire({
+                            title: "Email Exists",
+                            text: "This email is already registered.",
+                            icon: "error"
+                        }).then(() => {
+                            emailField.value = "";
+                            emailField.focus();
+                        });
+                        submitButton.disabled = true;
+                    } else {
+                        submitButton.disabled = false;
+                    }
+                })
+                .catch(error => {
+                    console.error("Error checking email:", error);
+                    submitButton.disabled = false;
+                });
+        }
+
+        function validatePasswords() {
+            const password = document.getElementById("Password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+            const errorMessage = document.getElementById("error-message");
+            const submitButton = document.getElementById("submitButton");
+
+            if (password !== confirmPassword) {
+                errorMessage.textContent = "Passwords do not match!";
+                submitButton.disabled = true;
+            } else {
+                errorMessage.textContent = "";
+                submitButton.disabled = false;
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="signup-container">
+    <h2>Sign Up</h2>
+    <form th:action="@{signup}" method="post">
+        <div class="form-group">
+            <label for="Name">Name:</label>
+            <input type="text" id="Name" name="Name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="Email">Email:</label>
+            <input type="email" id="Email" name="Email" required  onblur="checkEmailExistence()">
+        </div>
+
+        <div class="form-group">
+            <label for="Password">Password:</label>
+            <input type="password" id="Password" name="Password" required>
+        </div>
+
+        <div class="form-group">
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" required onblur="validatePasswords()">
+            <span id="error-message" style="color: red;"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="Gender">Gender:</label>
+            <select id="gender" name="Gender" required>
+                <option value="">-- Select Gender --</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <button type="submit" id="submitButton" disabled>Sign Up</button>
+        <p>Already have an account? <a href="/p2/login">LogIn</a></p>
+    </form>
+</div>
+</body>
+</html>
+
+<script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", function (){
+        var message = [[${alertMessage}]]
+        console.log("message",message);
+
+        if(message === null) return;
+
+        if(message === "This email already exists"){
+            Swal.fire({
+                title: "Failed",
+                text: "This Email is already registered",
+                icon: "error"
+            });
+        }
+    })
+</script>

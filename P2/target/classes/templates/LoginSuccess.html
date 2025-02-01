@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Login Successfully</h1>
+</body>
+</html>
+
+
+<script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", function (){
+        var message = [[${alertMessage}]]
+        console.log("message",message);
+
+        if(message === null) return;
+
+        if(message === "Login successful"){
+            Swal.fire({
+                title: "SUCCESS",
+                text: "Done",
+                icon: "success"
+            });
+        }
+    })
+</script>

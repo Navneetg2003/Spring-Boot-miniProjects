@@ -1,0 +1,87 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Styling for the body */
+body {
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    background-color: #605e5e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color:#333;
+}
+
+/* Styling for the login container */
+.login-container {
+    padding: 30px;
+    background-color:#605e5e;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 40px;
+    color: #4dd931;
+}
+
+/* Form group styling */
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-size: 15px;
+    font-weight: 800;
+    color: #4dd931;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #605e5e;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 25px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+p {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+a {
+    color: #4dd931;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
