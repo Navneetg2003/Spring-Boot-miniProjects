@@ -1,0 +1,87 @@
+* {
+    padding: 10px;
+    margin: 10px;
+    background-color: rgb(66, 57, 67);
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-style: italic;
+    font-weight: 500;
+    color: aliceblue;
+    box-sizing: border-box;
+}
+
+.container {
+    border: 2px solid white;
+    margin: 0 auto;
+    width: 40%;
+    min-height: fit-content;
+    min-width: fit-content;
+    border-radius: 5%;
+    padding: 20px;
+}
+
+.heading {
+    font-weight: bold;
+    text-decoration: underline darksalmon;
+    border: 2px solid antiquewhite;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.lbl {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1rem;
+    color: aliceblue;
+    background-color: transparent;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 20px;
+    border: 2px solid white;
+    border-radius: 15px;
+    background-color: rgb(66, 57, 67);
+    color: aliceblue;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-style: italic;
+    outline: none;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: darksalmon;
+}
+
+.btn {
+    border-radius: 20px;
+    border: 2px solid aliceblue;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: transparent;
+    color: aliceblue;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.btn:hover {
+    background-color: rgba(66, 57, 67, 0.56);
+    border-color: darksalmon;
+}
+
+.signup-link {
+    margin-top: 20px;
+    font-size: 1rem;
+    background-color: transparent;
+}
+
+.signup-link a {
+    color: darksalmon;
+    text-decoration: none;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}

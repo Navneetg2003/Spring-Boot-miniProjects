@@ -1,0 +1,145 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > StudentEntryService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.p0.Service</a>
+</div>
+
+<h1>Coverage Summary for Class: StudentEntryService (com.example.p0.Service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">StudentEntryService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    33.3%
+  </span>
+  <span class="absValue">
+    (2/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    33.3%
+  </span>
+  <span class="absValue">
+    (3/9)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.p0.Service;
+&nbsp;
+&nbsp;import com.example.p0.Entity.StudentEntry;
+&nbsp;import com.example.p0.Repository.StudentEntryRepository;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;@Service
+<b class="fc">&nbsp;public class StudentEntryService {</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private StudentEntryRepository studentEntryRepository;
+&nbsp;
+&nbsp;    public List&lt;StudentEntry&gt; findAll() {
+<b class="nc">&nbsp;        return studentEntryRepository.findAllStudentEntries();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Optional&lt;StudentEntry&gt; findById(int id) {
+<b class="nc">&nbsp;        return studentEntryRepository.findStudentEntryById(id);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Optional&lt;StudentEntry&gt; findByName(String name) {
+<b class="nc">&nbsp;        return studentEntryRepository.findStudentEntryByName(name);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean save(StudentEntry studentEntry) {
+&nbsp;        try {
+<b class="fc">&nbsp;            studentEntryRepository.save(studentEntry);</b>
+<b class="fc">&nbsp;            return true;</b>
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public void deleteById(int id) {
+<b class="nc">&nbsp;        studentEntryRepository.deleteStudentEntryById(id);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-27 14:42</div>
+</div>
+</body>
+</html>
