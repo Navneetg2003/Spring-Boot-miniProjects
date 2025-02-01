@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map Visualization</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+    <style>
+        #map {
+            height: 100vh;
+        }
+
+        .leaflet-top .custom-button {
+            margin: 10px;
+            padding: 6px 12px;
+            background-color: #007bff;
+            color: white;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .leaflet-top .custom-button:hover {
+            background-color: #0056b3;
+        }
+
+        .leaflet-bottom .report-button {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .leaflet-bottom .report-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+    // Initialize the map
+    const map = L.map('map').setView([20.5937, 78.9629], 5); // Centered on India
+
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Define custom icons for categories
+    const icons = {
+        Accident: L.icon({
+            iconUrl: 'https://c0.klipartz.com/pngpicture/858/375/gratis-png-senal-de-advertencia-de-peligro-para-la-seguridad-simbolo-de-exclamacion-thumbnail.png',
+            iconSize: [35, 35],
+        }),
+        "Road Block": L.icon({
+            iconUrl: 'data:image/png;base64,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', // Path to the roadblock icon
+            iconSize: [35, 35],
+        }),
+        Location: L.icon({
+            iconUrl: 'data:image/png;base64,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', // Path to the default location icon
+            iconSize: [35, 35],
+        })
+    };
+
+    let waypoints = [];
+
+    // Fetch locations from the API
+    fetch('/locations')
+        .then(response => response.json())
+        .then(locations => {
+            locations.forEach(location => {
+                const category = location.category || "Location";
+                const icon = icons[category] || icons["Location"];
+
+                // Add a marker for each location with a custom icon
+                L.marker([location.latitude, location.longitude], { icon })
+                    .addTo(map)
+                    .bindPopup(`
+                        <b>${location.name}</b><br>
+                        <b>Category:</b> ${category}<br>
+                        <b>Lat:</b> ${location.latitude}, <b>Lng:</b> ${location.longitude}
+                    `);
+
+                // Add to waypoints for routing
+                waypoints.push([location.longitude, location.latitude]); // Switch to [lon, lat] for OSRM
+            });
+        })
+        .catch(error => console.error('Error fetching locations:', error));
+
+    // Add a custom button to show user location and update waypoints
+    const locationButton = L.control({ position: 'topright' });
+
+    locationButton.onAdd = function () {
+        const button = L.DomUtil.create('button', 'custom-button');
+        button.innerHTML = 'Show My Location';
+        L.DomEvent.on(button, 'click', showUserLocationAndRoute);
+        return button;
+    };
+
+    locationButton.addTo(map);
+
+    // Add a report button to redirect to /form
+    const reportButton = L.control({ position: 'bottomright' });
+
+    reportButton.onAdd = function () {
+        const button = L.DomUtil.create('button', 'report-button');
+        button.innerHTML = 'Create Report';
+        button.onclick = function () {
+            window.location.href = '/form'; // Redirect to /form
+        };
+        return button;
+    };
+
+    reportButton.addTo(map);
+
+    // Function to show the user's current location and update waypoints
+    function showUserLocationAndRoute() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    const { latitude, longitude } = position.coords;
+
+                    // Add user's current location marker
+                    L.marker([latitude, longitude], {
+                        icon: L.icon({
+                            iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e7/Blue_dot.svg',
+                            iconSize: [20, 20],
+                        }),
+                    })
+                        .addTo(map)
+                        .bindPopup('<b>Your Current Location</b>')
+                        .openPopup();
+
+                    map.setView([latitude, longitude], 13); // Center the map on the user's location
+
+                    // Add the user's current location to waypoints as the starting point
+                    waypoints.unshift([longitude, latitude]);
+
+                    // Activate routing with the updated waypoints
+                    activateRouting();
+                },
+                error => {
+                    alert('Error getting location: ' + error.message);
+                }
+            );
+        } else {
+            alert('Geolocation is not supported by your browser.');
+        }
+    }
+
+    // Function to activate routing using OSRM
+    function activateRouting() {
+        if (waypoints.length >= 2) {
+            for (let i = 0; i < waypoints.length - 1; i++) {
+                const start = waypoints[i];
+                const end = waypoints[i + 1];
+
+                // Construct the OSRM API URL
+                const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${start.join(',')};${end.join(',')}?overview=full&geometries=geojson`;
+
+                // Fetch route from OSRM API
+                fetch(osrmUrl)
+                    .then(response => response.json())
+                    .then(routeData => {
+                        if (routeData.routes && routeData.routes.length > 0) {
+                            const route = routeData.routes[0];
+                            const coordinates = route.geometry.coordinates.map(coord => [coord[1], coord[0]]); // Convert [lon, lat] to [lat, lon]
+
+                            // Add route to map
+                            L.polyline(coordinates, { color: 'blue', weight: 4 }).addTo(map);
+                        } else {
+                            console.warn('No routes found for:', start, end);
+                        }
+                    })
+                    .catch(error => console.error('Error fetching route:', error));
+            }
+        } else {
+            alert('Not enough waypoints to create a route.');
+        }
+    }
+</script>
+</body>
+</html>
