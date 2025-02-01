@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatRoom</title>
+
+    <!-- Bootstrap CSS link -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- jQuery, SockJS, and STOMP scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+
+    <!-- CryptoJS Library for Encryption -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+
+    <!-- Custom Script -->
+    <script src="main.js" defer></script>
+</head>
+
+<body class="bg-dark text-neon-green">
+
+<!-- Login Form -->
+<div id="name-from" class="d-flex align-items-center vh-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card p-4 shadow-lg border-0 bg-black border-2 border-neon-green">
+                    <h2 class="text-center mb-3 text-neon-green">Join the ChatRoom</h2>
+                    <div class="input-group mb-3">
+                        <input type="text" placeholder="Enter your name" id="name-value" autofocus class="form-control rounded-0 text-neon-green bg-black border-2 border-neon-green">
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" placeholder="Enter password" id="password-value" class="form-control rounded-0 text-neon-green bg-black border-2 border-neon-green">
+                    </div>
+                    <button class="btn btn-neon-green rounded-0 w-100" id="login">Enter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chat Room -->
+<div id="chat-room" class="d-none">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card shadow-lg rounded-3 bg-black border-0">
+                    <div class="card-header bg-dark text-neon-green text-center border-0">
+                        <h3 id="name-title" class="mb-0"></h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group mb-3">
+                            <input type="text" placeholder="Enter your message" id="message-value" class="form-control rounded-0 text-neon-green bg-black border-2 border-neon-green">
+                            <button class="btn btn-neon-green ms-2 rounded-0" id="send-btn">Send</button>
+                            <button class="btn btn-neon-red ms-2 rounded-0" id="logout">Logout</button>
+                        </div>
+                        <div class="table-responsive mt-4" style="height: 300px; overflow-y: auto; border-radius: 5px; background-color: #222222;">
+                            <table id="message-container-table" class="table table-dark table-striped mb-0">
+                                <!-- Messages will be displayed here -->
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
